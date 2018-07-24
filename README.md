@@ -6,6 +6,8 @@
 
 sha1加密问题
 
+jsapi_ticket问题
+
 
 
 http

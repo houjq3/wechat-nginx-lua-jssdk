@@ -20,7 +20,8 @@ function create_timestamp()
 end
 
 function getJsApiTicket()
-    local jsapi_ticket = ngx.shared.wechat:get( 'jsapi_ticket')
+    local jsapi_ticket = ngx.shared.wechat:get( 'jsapi_ticket' )
+    ngx.log(ngx.ERR, "jsapi_ticket：", jsapi_ticket)
     if jsapi_ticket ~= nil then
         return jsapi_ticket
     end
@@ -41,6 +42,8 @@ function getJsApiTicket()
         return
     end
 
+    ngx.log(ngx.ERR, 'jsapi_ticket: ', json.encode(res))
+
     local data = dkjson.decode( res.body )
     ngx.shared.wechat:set( 'jsapi_ticket', data['ticket'], 7000 )
     return data['ticket']
@@ -48,11 +51,12 @@ end
 
 
 function getAccessToken()
-    local access_token = ngx.shared.wechat:get( 'access_token')
+    local access_token = ngx.shared.wechat:get( 'access_token' )
+    ngx.log(ngx.ERR, access_token)
     if access_token ~= nil then
         return access_token
     end
-
+    ngx.log(ngx.ERR, '111111')
     local httpc = http.new()
     local res, err = httpc:request_uri('https://api.weixin.qq.com/cgi-bin/token', {
         method = 'GET',
@@ -64,11 +68,15 @@ function getAccessToken()
         }
     })
 
+    ngx.log(ngx.ERR, '222222')
+
     if not res then
         -- ngx.say('failed to request: ', err)
         ngx.log(ngx.ERR, 'failed to request: ', err)
         return
     end
+    ngx.log(ngx.ERR, '3333333')
+    ngx.log(ngx.ERR, 'access_token: ', json.encode(res))
 
     local data = dkjson.decode( res.body )
     ngx.shared.wechat:set( 'access_token', data['access_token'], 7000 )
