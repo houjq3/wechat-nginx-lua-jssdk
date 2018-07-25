@@ -7,7 +7,7 @@ Nginx+Lua实现微信分享接口 JS-SDK
 ### http
 
 ```nginx
-lua_package_path '/home/mdxdd/soft/openresty/nginx/conf/wechat_jssdk_lua/?.lua;;';   
+lua_package_path '$prefix/conf/lua/?.lua;;';   
 lua_code_cache on;
 lua_shared_dict wechat 1m;
 ```
@@ -17,7 +17,7 @@ lua_shared_dict wechat 1m;
 ```nginx
 location = /wechat/signature { 
     resolver 8.8.8.8;
-    access_by_lua_file /home/mdxdd/soft/openresty/nginx/conf/wechat_jssdk_lua/sign.lua;
+    access_by_lua_file conf/lua/sign.lua;
 }
 ```
 
