@@ -85,7 +85,7 @@ end
 
 function _M.sign()
     local url = ngx.var.scheme..'://'..ngx.var.host..ngx.var.request_uri
-    local ret = {
+    local args_table = {
         ['nonceStr'] = create_nonce_str(),
         ['jsapi_ticket'] = getJsApiTicket(),
         ['timestamp'] =  create_timestamp(),
@@ -93,14 +93,23 @@ function _M.sign()
     }
 
     local sha1 = resty_sha1:new()
-    sha1:update(table.concat(ret, '&'))
+    sha1:update(table.concat(args_table, '&'))
     local digest = sha1:final()
     local signature = resty_string.to_hex(digest)
     
-    -- ngx.log(ngx.ERR, json.encode(ret))
+    -- ngx.log(ngx.ERR, json.encode(args_table))
     ngx.header.content_type = "text/html"
     ngx.header.charset = "utf-8"
-    ngx.say(json.encode({["signature"] = signature}))
+
+
+    local ret = {
+        ['appId'] = _M.appId,
+        ['nonceStr'] = create_nonce_str(),
+        ['signature'] = signature,
+        ['timestamp'] =  create_timestamp()
+    }
+    
+    ngx.say(json.encode(ret))
     ngx.exit( ngx.HTTP_OK )
 end
 
