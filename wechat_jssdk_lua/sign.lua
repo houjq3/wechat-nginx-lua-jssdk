@@ -84,29 +84,35 @@ function getAccessToken()
 end
 
 function _M.sign()
-    local url = ngx.var.scheme..'://'..ngx.var.host..ngx.var.request_uri
+    local url = ngx.req.get_uri_args()['url']
+    local noncestr = create_nonce_str()
+    local timestamp = create_timestamp()
+    local jsapi_ticket = getJsApiTicket()
+
     local args_table = {
-        ['nonceStr'] = create_nonce_str(),
-        ['jsapi_ticket'] = getJsApiTicket(),
-        ['timestamp'] =  create_timestamp(),
-        ['url'] = url
+        'jsapi_ticket='..jsapi_ticket,
+        'noncestr='..noncestr,
+        'timestamp='..timestamp,
+        'url='..url
     }
 
     local sha1 = resty_sha1:new()
-    sha1:update(table.concat(args_table, '&'))
+    sha1:update(table.concat(args_table, "&"))
     local digest = sha1:final()
     local signature = resty_string.to_hex(digest)
-    
-    -- ngx.log(ngx.ERR, json.encode(args_table))
+
+    ngx.log(ngx.ERR, json.encode(args_table))
+    ngx.log(ngx.ERR, table.concat(args_table, "&"))
+    ngx.log(ngx.ERR, signature)
+
     ngx.header.content_type = "text/html"
     ngx.header.charset = "utf-8"
 
-
     local ret = {
         ['appId'] = _M.appId,
-        ['nonceStr'] = create_nonce_str(),
         ['signature'] = signature,
-        ['timestamp'] =  create_timestamp()
+        ['nonceStr'] = noncestr,
+        ['timestamp'] =  timestamp
     }
     
     ngx.say(json.encode(ret))
