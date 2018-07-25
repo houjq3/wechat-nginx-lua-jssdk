@@ -1,8 +1,8 @@
 
 local _M = {}
 
-_M.appId = 'wx3189d6b530740b13'
-_M.appSecret = 'a2c03aea62a9c156b3e767090f77a46e'
+_M.appId = 'your appid'
+_M.appSecret = 'your appSecret'
 
 _M['wechat'] = {}
 _M['wechat'].exptime = 7000

@@ -2,9 +2,17 @@
 
 Nginx+Lua实现微信分享接口 JS-SDK 
 
-## nginx
 
-### http
+
+
+
+## 服务端Nginx
+
+- 建议安装 [OpenResty](http://openresty.org/cn/) 1.13以上版本
+- 将 `lua目录` 拖到 `$prefix/conf` 下
+- 修改 nginx.conf
+
+**http  {} 新增**
 
 ```nginx
 lua_package_path '$prefix/conf/lua/?.lua;;';   
@@ -12,7 +20,7 @@ lua_code_cache on;
 lua_shared_dict wechat 1m;
 ```
 
-### server
+**server {}** 新增
 
 ```nginx
 location = /wechat/signature { 
@@ -21,9 +29,16 @@ location = /wechat/signature {
 }
 ```
 
+- 修改 lua/sign.lua
+
+```lua
+_M.appId = 'your appid'
+_M.appSecret = 'your appSecret'
+```
 
 
-## 客户端
+
+## 客户端网页
 
 ```html
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
