@@ -1,12 +1,6 @@
-# lua-nginx-wechat-jssdk
+# wechat-nginx-lua-jssdk
 
-
-
-## 说明
-
-分享不支持未认证订阅号
-
-
+Nginx+Lua实现微信分享接口 JS-SDK 
 
 ## nginx
 
@@ -116,3 +110,15 @@ wx.error(function (res) {
 </script>
 ```
 
+
+
+## 说明
+
+- 分享接口不支持未认证订阅号
+- 调试建议使用微信web开发者工具
+
+
+
+## 捐赠
+
+![请作者喝杯咖啡吧~](./doc/donation.jpg)
