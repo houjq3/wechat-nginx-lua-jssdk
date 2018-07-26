@@ -4,8 +4,6 @@ Nginx+Lua实现微信分享接口 JS-SDK
 
 
 
-
-
 ## 服务端Nginx
 
 - 建议安装 [OpenResty](http://openresty.org/cn/) 1.13以上版本
@@ -131,9 +129,13 @@ wx.error(function (res) {
 
 - 分享接口不支持未认证订阅号
 - 调试建议使用微信web开发者工具
+- 本项目仅支持单机nginx，集群nginx需将 appId、appSecret、lua_shared_dict配置引入redis
 
 
 
 ## 捐赠
 
-![请作者喝杯咖啡吧~](./doc/donation.jpg)
+请作者喝杯咖啡吧~
+
+<img title="donationQRcode" src="http://houjq.com/pay.jpg" width="40%">
+
