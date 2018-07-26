@@ -129,13 +129,11 @@ wx.error(function (res) {
 
 - 分享接口不支持未认证订阅号
 - 调试建议使用微信web开发者工具
-- 本项目仅支持单机nginx，集群nginx需将 appId、appSecret、lua_shared_dict配置引入redis
+- 项目仅支持单机nginx，集群nginx需将 appId、appSecret、lua_shared_dict配置引入redis
 
 
 
-## 捐赠
-
-请作者喝杯咖啡吧~
+## 赞赏
 
 <img title="donationQRcode" src="http://houjq.com/pay.jpg" width="40%">
 
